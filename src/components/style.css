@@ -1,0 +1,85 @@
+
+.containerPacman{
+    position: absolute;
+}
+
+.pacman {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #F2D648;
+    position: relative;
+    margin-top: 20px;
+  }
+  
+  .pacman__eye {
+    position: absolute;
+    width: 2px;
+    height: 3px;
+    border-radius: 50%;
+    top: 2px;
+    right: 4px;
+    background: #333333;    
+  }
+  
+  .pacman__mouth {
+    background: #000;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(100% 74%, 44% 48%, 100% 21%);
+    border-radius: 100%;
+    animation-name: eat;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
+  }
+  
+  .board{
+    margin: 0 auto;
+    position: relative;    
+    width: 560px;
+    transform: rotateX(30deg);
+  }
+  .row{
+    height: 20px;
+  }
+  .square {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    
+}
+.square.wall{
+    background-color: #4565AA;
+}
+.square.dot {
+    background: #e8da5a;
+    border-radius: 50%;
+    height: 5px;
+    width: 5px;
+    margin: 7.5px;
+    box-shadow: 0px 5px 5px #1d1c1c;
+}
+.square.power.dot {
+    height: 9px;
+    width: 9px;
+    background: #FFF;
+    margin: 5.5px;
+}
+  @keyframes eat {
+    0% {
+      clip-path: polygon(100% 74%, 44% 48%, 100% 21%);
+    }
+    25% {
+      clip-path: polygon(100% 60%, 44% 48%, 100% 40%);
+    }
+    50% {
+      clip-path: polygon(100% 50%, 44% 48%, 100% 50%);
+    }
+    75% {
+     clip-path: polygon(100% 59%, 44% 48%, 100% 35%);
+    }
+    100% {
+     clip-path: polygon(100% 74%, 44% 48%, 100% 21%);
+    }
+  }
