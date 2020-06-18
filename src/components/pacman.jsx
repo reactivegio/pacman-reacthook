@@ -3,13 +3,26 @@ import React, {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from "react";
+import EatpillSound from "../assets/audio/eatpill.ogg";
+import StartSound from "../assets/audio/opening_song.ogg";
+import DieSound from "../assets/audio/die.ogg";
+import EatghostSound from "../assets/audio/eatghost.ogg";
+import EatingSound from "../assets/audio/eating.short.ogg";
+import Eating2Sound from "../assets/audio/eating.ogg";
+
+import Audio from "../components/audio";
+
 import GameMap from "../components/gameMap";
 import { boardMapping } from "../constants/board";
 import "./style.css";
 
 const Pacman = (props, ref) => {
+  const audioRef = useRef();
+
+  const [audioFiles, setAudioFiles] = useState(null);
   const [playerPos, setPlayerPos] = useState({
     board: boardMapping,
     x: 12,
@@ -53,11 +66,21 @@ const Pacman = (props, ref) => {
         if (direction === "up" && currentTop > 0) top -= 1;
       }
       if (collisionVal === 2) {
+        audioRef.current.play(
+          "eating",
+          audioFiles["eating"][0],
+          audioFiles["eating"][1]
+        );
         newScore = newScore + 1;
         cloneBoard[top][left] = 0;
       } else if (collisionVal === 3) {
         // ghost vulnerability
         cloneBoard[top][left] = 0;
+        audioRef.current.play(
+          "eating2",
+          audioFiles["eating2"][0],
+          audioFiles["eating2"][1]
+        );
       }
 
       setPlayerPos({
@@ -71,7 +94,7 @@ const Pacman = (props, ref) => {
         sign: signX ? Math.sign(signX) : Math.sign(signY),
       });
     },
-    [playerPos.board, playerPos.score, checkCollision]
+    [playerPos.board, playerPos.score, checkCollision, audioFiles]
   );
 
   const moveSelection = useCallback(
@@ -113,6 +136,20 @@ const Pacman = (props, ref) => {
   );
 
   useEffect(() => {
+    const extension = "ogg"; //Modernizr.audioRef.current.ogg ? "ogg" : "mp3";
+    const root = "./";
+    if (!audioFiles)
+      setAudioFiles({
+        start: [StartSound, "start"],
+        die: [DieSound, "die"],
+        eatghost: [EatghostSound, "eatghost"],
+        eatpill: [EatpillSound, "eatpill"],
+        eating: [EatingSound, "eating"],
+        eating2: [Eating2Sound, "eating2"],
+      });
+  }, [audioFiles]);
+
+  useEffect(() => {
     let signX =
       playerPos.direction === "left"
         ? -1
@@ -128,7 +165,7 @@ const Pacman = (props, ref) => {
     window.addEventListener("keydown", moveSelection);
     let timerId = setInterval(() => {
       moveIt(playerPos.x, playerPos.y, signX, signY, playerPos.direction);
-    }, 100);
+    }, 300);
 
     return () => {
       window.removeEventListener("keydown", moveSelection);
@@ -185,6 +222,7 @@ const Pacman = (props, ref) => {
         </div>
       </div>
       <GameMap board={playerPos.board} />
+      <Audio ref={audioRef} audioFiles={audioFiles} soundDisabled={false} />
     </React.Fragment>
   );
 };

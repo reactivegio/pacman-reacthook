@@ -56,7 +56,7 @@ const Audio = (props, ref) => {
         let f;
         if (document.getElementById(name + "_audio")) {
           f = document.getElementById(name + "_audio");
-
+          f.playbackRate = 1.5;
           var promise = f.play();
           if (promise !== undefined) {
             promise
