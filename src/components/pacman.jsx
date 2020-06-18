@@ -16,11 +16,15 @@ import Eating2Sound from "../assets/audio/eating.ogg";
 import Audio from "../components/audio";
 
 import GameMap from "../components/gameMap";
+import GhostRandom from "./ghostRandom";
 import { boardMapping } from "../constants/board";
 import "./style.css";
 
+export const GHOSTSSPECS = ["#00FFDE", "#FF0000", "#FFB8DE", "#FFB847"];
+
 const Pacman = (props, ref) => {
   const audioRef = useRef();
+  const ghostsRandomRef = useRef([]);
 
   const [audioFiles, setAudioFiles] = useState(null);
   const [playerPos, setPlayerPos] = useState({
@@ -200,6 +204,7 @@ const Pacman = (props, ref) => {
       marginLeft: "-9px",
     };
   }
+
   return (
     <React.Fragment>
       <div
@@ -221,6 +226,7 @@ const Pacman = (props, ref) => {
           <div className="pacman__mouth"></div>
         </div>
       </div>
+      <GhostRandom ref={ghostsRandomRef} board={playerPos.board} />
       <GameMap board={playerPos.board} />
       <Audio ref={audioRef} audioFiles={audioFiles} soundDisabled={false} />
     </React.Fragment>
