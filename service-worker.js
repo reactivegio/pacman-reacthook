@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/pacman-reacthook/precache-manifest.051244fc927e9dc54e69dfa174237eed.js"
+  "/pacman-reacthook/precache-manifest.0b8d285592896270ac63ba93217cb3cf.js"
 );
 
 self.addEventListener('message', (event) => {
