@@ -236,7 +236,7 @@ const Pacman = (props, ref) => {
 
   return (
     <React.Fragment>
-      <FooterScore life={3} />
+      <FooterScore life={3} score={playerPos.score} />
       <div
         className="containerPacman"
         style={Object.assign(
