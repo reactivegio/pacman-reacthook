@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d251d02c0ca48d891b440378c9e10005",
+    "revision": "1218cfd5aaaf4c33a975ac6e343ab734",
     "url": "/pacman-reacthook/index.html"
   },
   {
-    "revision": "26b8699eee6efc927a32",
-    "url": "/pacman-reacthook/static/css/main.327cb89b.chunk.css"
+    "revision": "890e1568a49e676e1f8a",
+    "url": "/pacman-reacthook/static/css/main.7628d60f.chunk.css"
   },
   {
-    "revision": "465f9ac1a9291bcbde4f",
-    "url": "/pacman-reacthook/static/js/2.bd17ee66.chunk.js"
+    "revision": "4e29aa3bad0376aae75e",
+    "url": "/pacman-reacthook/static/js/2.12ab2b06.chunk.js"
   },
   {
     "revision": "e88a3e95b5364d46e95b35ae8c0dc27d",
-    "url": "/pacman-reacthook/static/js/2.bd17ee66.chunk.js.LICENSE.txt"
+    "url": "/pacman-reacthook/static/js/2.12ab2b06.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "26b8699eee6efc927a32",
-    "url": "/pacman-reacthook/static/js/main.b566d5bd.chunk.js"
+    "revision": "890e1568a49e676e1f8a",
+    "url": "/pacman-reacthook/static/js/main.643fb9b4.chunk.js"
   },
   {
     "revision": "b6407bbb235b0c0149d6",

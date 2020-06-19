@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/pacman-reacthook/static/css/main.327cb89b.chunk.css",
-    "main.js": "/pacman-reacthook/static/js/main.b566d5bd.chunk.js",
-    "main.js.map": "/pacman-reacthook/static/js/main.b566d5bd.chunk.js.map",
+    "main.css": "/pacman-reacthook/static/css/main.7628d60f.chunk.css",
+    "main.js": "/pacman-reacthook/static/js/main.643fb9b4.chunk.js",
+    "main.js.map": "/pacman-reacthook/static/js/main.643fb9b4.chunk.js.map",
     "runtime-main.js": "/pacman-reacthook/static/js/runtime-main.626a0941.js",
     "runtime-main.js.map": "/pacman-reacthook/static/js/runtime-main.626a0941.js.map",
-    "static/js/2.bd17ee66.chunk.js": "/pacman-reacthook/static/js/2.bd17ee66.chunk.js",
-    "static/js/2.bd17ee66.chunk.js.map": "/pacman-reacthook/static/js/2.bd17ee66.chunk.js.map",
+    "static/js/2.12ab2b06.chunk.js": "/pacman-reacthook/static/js/2.12ab2b06.chunk.js",
+    "static/js/2.12ab2b06.chunk.js.map": "/pacman-reacthook/static/js/2.12ab2b06.chunk.js.map",
     "index.html": "/pacman-reacthook/index.html",
-    "precache-manifest.d1d78f4534291c2d15a79d55b88ac890.js": "/pacman-reacthook/precache-manifest.d1d78f4534291c2d15a79d55b88ac890.js",
+    "precache-manifest.16709973355d14e7aef3eabb5daf8ff9.js": "/pacman-reacthook/precache-manifest.16709973355d14e7aef3eabb5daf8ff9.js",
     "service-worker.js": "/pacman-reacthook/service-worker.js",
-    "static/css/main.327cb89b.chunk.css.map": "/pacman-reacthook/static/css/main.327cb89b.chunk.css.map",
-    "static/js/2.bd17ee66.chunk.js.LICENSE.txt": "/pacman-reacthook/static/js/2.bd17ee66.chunk.js.LICENSE.txt",
+    "static/css/main.7628d60f.chunk.css.map": "/pacman-reacthook/static/css/main.7628d60f.chunk.css.map",
+    "static/js/2.12ab2b06.chunk.js.LICENSE.txt": "/pacman-reacthook/static/js/2.12ab2b06.chunk.js.LICENSE.txt",
     "static/media/die.ogg": "/pacman-reacthook/static/media/die.70171cce.ogg",
     "static/media/eatghost.ogg": "/pacman-reacthook/static/media/eatghost.45f4836c.ogg",
     "static/media/eating.ogg": "/pacman-reacthook/static/media/eating.b8372a5b.ogg",
@@ -21,8 +21,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.626a0941.js",
-    "static/js/2.bd17ee66.chunk.js",
-    "static/css/main.327cb89b.chunk.css",
-    "static/js/main.b566d5bd.chunk.js"
+    "static/js/2.12ab2b06.chunk.js",
+    "static/css/main.7628d60f.chunk.css",
+    "static/js/main.643fb9b4.chunk.js"
   ]
 }
