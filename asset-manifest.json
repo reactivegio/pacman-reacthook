@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/pacman-reacthook/static/css/main.7628d60f.chunk.css",
-    "main.js": "/pacman-reacthook/static/js/main.643fb9b4.chunk.js",
-    "main.js.map": "/pacman-reacthook/static/js/main.643fb9b4.chunk.js.map",
+    "main.css": "/pacman-reacthook/static/css/main.8d94a48a.chunk.css",
+    "main.js": "/pacman-reacthook/static/js/main.3102bb5e.chunk.js",
+    "main.js.map": "/pacman-reacthook/static/js/main.3102bb5e.chunk.js.map",
     "runtime-main.js": "/pacman-reacthook/static/js/runtime-main.626a0941.js",
     "runtime-main.js.map": "/pacman-reacthook/static/js/runtime-main.626a0941.js.map",
     "static/js/2.12ab2b06.chunk.js": "/pacman-reacthook/static/js/2.12ab2b06.chunk.js",
     "static/js/2.12ab2b06.chunk.js.map": "/pacman-reacthook/static/js/2.12ab2b06.chunk.js.map",
     "index.html": "/pacman-reacthook/index.html",
-    "precache-manifest.16709973355d14e7aef3eabb5daf8ff9.js": "/pacman-reacthook/precache-manifest.16709973355d14e7aef3eabb5daf8ff9.js",
+    "precache-manifest.e05045dbc885ede2d3def7360243fada.js": "/pacman-reacthook/precache-manifest.e05045dbc885ede2d3def7360243fada.js",
     "service-worker.js": "/pacman-reacthook/service-worker.js",
-    "static/css/main.7628d60f.chunk.css.map": "/pacman-reacthook/static/css/main.7628d60f.chunk.css.map",
+    "static/css/main.8d94a48a.chunk.css.map": "/pacman-reacthook/static/css/main.8d94a48a.chunk.css.map",
     "static/js/2.12ab2b06.chunk.js.LICENSE.txt": "/pacman-reacthook/static/js/2.12ab2b06.chunk.js.LICENSE.txt",
     "static/media/die.ogg": "/pacman-reacthook/static/media/die.70171cce.ogg",
     "static/media/eatghost.ogg": "/pacman-reacthook/static/media/eatghost.45f4836c.ogg",
@@ -22,7 +22,7 @@
   "entrypoints": [
     "static/js/runtime-main.626a0941.js",
     "static/js/2.12ab2b06.chunk.js",
-    "static/css/main.7628d60f.chunk.css",
-    "static/js/main.643fb9b4.chunk.js"
+    "static/css/main.8d94a48a.chunk.css",
+    "static/js/main.3102bb5e.chunk.js"
   ]
 }
