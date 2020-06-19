@@ -70,8 +70,7 @@
 .ghost{
     position: relative;
     height: 25px;
-    width: 18px;    
-    background: red;
+    width: 18px;        
     border-top-left-radius: 70px;
     border-top-right-radius: 70px;
 }
@@ -92,8 +91,8 @@
 .ghost .eyes::before, .ghost .eyes::after {
     content: "";
     position: absolute;
-    background: blue;
-    height: 3px;
+    background: #4565AA;
+    height: 4px;
     width: 3px;
     border-radius: 100%;
     top: 3px;
@@ -102,6 +101,25 @@
     animation: peeperLeft 0.7s linear infinite;
 }
 
+.ghost .eyes.down::before, .ghost .eyes.down::after{
+    top: 7px !important;
+}
+.ghost .eyes.left::before{
+    top: 5px;
+    left: 3px;
+}
+.ghost .eyes.left::after{
+    left: 10px;
+    top: 5px;
+}
+.ghost .eyes.right::before{
+    top: 5px;
+    left: 5px;
+}
+.ghost .eyes.right::after{
+    top: 5px;
+    left: 12px;
+}
 .ghost .eyes::after {
     left: 11px;
     animation: peeperRight 0.7s linear infinite;
@@ -125,6 +143,53 @@
     content: "";
     left: 9px;
     bottom: -3px;
+}
+.boardCenteredMsg{
+    color: #000;
+    font-family: "Major Mono Display", monospace;
+    text-transform: lowercase;
+    font-weight: 600;
+    position: absolute;
+    top: calc(50% - 40px);
+    left: 67px;
+    font-size: 22px;
+    background-color: rgba(256,256,0, 0.8);
+    padding: 10px;
+}
+
+.scoreBoard{
+    margin: -40px auto;
+    border: 4px solid #FFF;
+    position: absolute;
+    width: 532px;
+    padding: 10px;
+    background-color: #FFF;
+    bottom: -20px;
+}
+.hearth{   
+    background-color: #e61a1a;
+    height: 20px;
+    position: relative;
+    transform: rotateZ(-45deg);
+    width: 20px;
+    display: inline-block;
+    margin: 10px 10px 0 10px;
+}
+.hearth:before, .hearth:after {
+    background-color: inherit;
+    border-radius: 50%;
+    content: '';
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+.hearth:before {
+    left: 0;
+    top: -50%;
+}
+.hearth:after {
+    right: -50%;
+    top: 0;
 }
   @keyframes eat {
     0% {

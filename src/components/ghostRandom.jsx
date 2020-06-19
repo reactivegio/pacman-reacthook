@@ -5,6 +5,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
+import * as gameConstants from "../constants/game";
 
 import "./style.css";
 
@@ -22,10 +23,10 @@ const GhostRandom = (props, ref) => {
     (x, y, direction) => {
       let value = null;
 
-      if (direction === "right") value = props.board[y][x + 1];
-      if (direction === "left") value = props.board[y][x - 1];
-      if (direction === "down") value = props.board[y + 1][x];
-      if (direction === "up") value = props.board[y - 1][x];
+      if (direction === "right") value = props.playerPos.board[y][x + 1];
+      if (direction === "left") value = props.playerPos.board[y][x - 1];
+      if (direction === "down") value = props.playerPos.board[y + 1][x];
+      if (direction === "up") value = props.playerPos.board[y - 1][x];
       return value;
     },
     [props]
@@ -35,7 +36,7 @@ const GhostRandom = (props, ref) => {
     (x, y, signX, signY, direction) => {
       let currentLeft = x;
       let currentTop = y;
-      let cloneBoard = [...props.board];
+      let cloneBoard = [...props.playerPos.board];
 
       /** if not exited from ghosts house not go up or down otherwise it free  */
       let arrayDirection = ghostPos.isExitHouse
@@ -46,7 +47,7 @@ const GhostRandom = (props, ref) => {
       let newDirection =
         arrayDirection[Math.floor(Math.random() * arrayDirection.length)];
       /** change random direction */
-      debugger;
+
       if (collisionVal === 1) {
         setGhostPos({
           ...ghostPos,
@@ -79,7 +80,7 @@ const GhostRandom = (props, ref) => {
         isExitHouse: ghostPos.isExitHouse,
       });
     },
-    [props.board, checkCollision, ghostPos]
+    [props.playerPos.board, checkCollision, ghostPos]
   );
 
   useEffect(() => {
@@ -96,13 +97,14 @@ const GhostRandom = (props, ref) => {
         ? 1
         : null;
     let timerGhostId = setInterval(() => {
-      runIt(ghostPos.x, ghostPos.y, signX, signY, ghostPos.direction);
+      if (props.gameState === gameConstants.PLAYING)
+        runIt(ghostPos.x, ghostPos.y, signX, signY, ghostPos.direction);
     }, 300);
 
     return () => {
       clearInterval(timerGhostId);
     };
-  }, [runIt, ghostPos.direction, ghostPos.x, ghostPos.y]);
+  }, [runIt, ghostPos.direction, ghostPos.x, ghostPos.y, props.gameState]);
 
   useImperativeHandle(
     ref,
@@ -132,8 +134,8 @@ const GhostRandom = (props, ref) => {
           addedStyle
         )}
       >
-        <div className="ghost">
-          <div className="eyes"></div>
+        <div className="ghost" style={{ background: "#71F3DA" }}>
+          <div className={"eyes " + ghostPos.direction}></div>
           <div className="skirt"></div>
         </div>
       </div>

@@ -14,18 +14,23 @@ import EatingSound from "../assets/audio/eating.short.ogg";
 import Eating2Sound from "../assets/audio/eating.ogg";
 
 import Audio from "../components/audio";
-
-import GameMap from "../components/gameMap";
+import FooterScore from "../components/footerScore";
+import GameMap from "./gameMap";
+import GhostChaser from "./ghostChaser";
 import GhostRandom from "./ghostRandom";
+import MessageBoard from "./messageBoard";
 import { boardMapping } from "../constants/board";
+import * as gameConstants from "../constants/game";
 import "./style.css";
 
 export const GHOSTSSPECS = ["#00FFDE", "#FF0000", "#FFB8DE", "#FFB847"];
 
 const Pacman = (props, ref) => {
   const audioRef = useRef();
-  const ghostsRandomRef = useRef([]);
+  const ghostsRandomRef = useRef();
+  const ghostChaserRef = useRef();
 
+  const [gameState, setGameState] = useState(gameConstants.WAITING);
   const [audioFiles, setAudioFiles] = useState(null);
   const [playerPos, setPlayerPos] = useState({
     board: boardMapping,
@@ -104,6 +109,19 @@ const Pacman = (props, ref) => {
   const moveSelection = useCallback(
     (evt) => {
       switch (evt.keyCode) {
+        // pressed "n"
+        case 78:
+          setGameState(gameConstants.COUNTDOWN);
+          audioRef.current.play(
+            "start",
+            audioFiles["start"][0],
+            audioFiles["start"][1]
+          );
+          setTimeout(() => {
+            setGameState(gameConstants.PLAYING);
+          }, 4000);
+
+          break;
         case 37:
           setPlayerPos({
             ...playerPos,
@@ -133,10 +151,11 @@ const Pacman = (props, ref) => {
           });
           break;
         default:
+          debugger;
           break;
       }
     },
-    [playerPos]
+    [audioFiles, playerPos]
   );
 
   useEffect(() => {
@@ -166,16 +185,26 @@ const Pacman = (props, ref) => {
         : playerPos.direction === "down"
         ? 1
         : null;
+
     window.addEventListener("keydown", moveSelection);
     let timerId = setInterval(() => {
-      moveIt(playerPos.x, playerPos.y, signX, signY, playerPos.direction);
+      if (gameState === gameConstants.PLAYING) {
+        moveIt(playerPos.x, playerPos.y, signX, signY, playerPos.direction);
+      }
     }, 300);
 
     return () => {
       window.removeEventListener("keydown", moveSelection);
       clearInterval(timerId);
     };
-  }, [moveIt, moveSelection, playerPos.direction, playerPos.x, playerPos.y]);
+  }, [
+    gameState,
+    moveIt,
+    moveSelection,
+    playerPos.direction,
+    playerPos.x,
+    playerPos.y,
+  ]);
 
   useImperativeHandle(
     ref,
@@ -207,6 +236,7 @@ const Pacman = (props, ref) => {
 
   return (
     <React.Fragment>
+      <FooterScore life={3} />
       <div
         className="containerPacman"
         style={Object.assign(
@@ -226,8 +256,26 @@ const Pacman = (props, ref) => {
           <div className="pacman__mouth"></div>
         </div>
       </div>
-      <GhostRandom ref={ghostsRandomRef} board={playerPos.board} />
+      <GhostRandom
+        gameState={gameState}
+        ref={ghostsRandomRef}
+        playerPos={playerPos}
+      />
+      <GhostChaser
+        gameState={gameState}
+        ref={ghostChaserRef}
+        playerPos={playerPos}
+      />
       <GameMap board={playerPos.board} />
+      {gameState === gameConstants.WAITING ||
+      gameState === gameConstants.PAUSE ? (
+        <MessageBoard
+          message={
+            gameConstants.WAITING ? "Press n to start new game" : "paused"
+          }
+        />
+      ) : null}
+
       <Audio ref={audioRef} audioFiles={audioFiles} soundDisabled={false} />
     </React.Fragment>
   );
