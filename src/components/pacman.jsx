@@ -55,6 +55,28 @@ const Pacman = (props, ref) => {
     [playerPos]
   );
 
+  const checkTunnel = useCallback(
+    (currentXVal) => {
+      let xMax = playerPos.board[playerPos.y].length - 1;
+      if (currentXVal === 0 && playerPos.direction === "left") {
+        return {
+          xVal: xMax,
+          direction: "left",
+        };
+      } else if (currentXVal === xMax && playerPos.direction === "right") {
+        return {
+          xVal: 0,
+          direction: "right",
+        };
+      }
+      return {
+        xVal: currentXVal,
+        direction: playerPos.direction,
+      };
+    },
+    [playerPos.board, playerPos.direction, playerPos.y]
+  );
+
   const moveIt = useCallback(
     (x, y, signX, signY, direction) => {
       let currentLeft = x;
@@ -64,6 +86,7 @@ const Pacman = (props, ref) => {
       let collisionVal = checkCollision(currentLeft, currentTop, direction);
 
       if (collisionVal === 1) return;
+
       let left = currentLeft;
       let top = currentTop;
       let newScore = playerPos.score;
@@ -74,6 +97,13 @@ const Pacman = (props, ref) => {
         if (direction === "down" && currentTop < 30) top += 1;
         if (direction === "up" && currentTop > 0) top -= 1;
       }
+
+      if (collisionVal === 0) {
+        let tunnelNewPos = checkTunnel(left);
+        left = tunnelNewPos.xVal;
+        direction = tunnelNewPos.direction;
+      }
+
       if (collisionVal === 2) {
         audioRef.current.play(
           "eating",
@@ -103,7 +133,7 @@ const Pacman = (props, ref) => {
         sign: signX ? Math.sign(signX) : Math.sign(signY),
       });
     },
-    [playerPos.board, playerPos.score, checkCollision, audioFiles]
+    [playerPos.board, playerPos.score, checkCollision, checkTunnel, audioFiles]
   );
 
   const moveSelection = useCallback(
