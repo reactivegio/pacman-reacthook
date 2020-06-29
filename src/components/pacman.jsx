@@ -40,6 +40,7 @@ const Pacman = (props, ref) => {
     old_y: 17,
     direction: "right",
     score: 0,
+    life: 3,
   });
 
   const checkCollision = useCallback(
@@ -76,6 +77,19 @@ const Pacman = (props, ref) => {
     },
     [playerPos.board, playerPos.direction, playerPos.y]
   );
+
+  const eaten = useCallback(() => {
+    let residualLife = playerPos.life - 1;
+    setPlayerPos({
+      ...playerPos,
+      x: 12,
+      old_x: 12,
+      y: 17,
+      old_y: 17,
+      direction: "right",
+      life: residualLife,
+    });
+  }, [playerPos]);
 
   const moveIt = useCallback(
     (x, y, signX, signY, direction) => {
@@ -236,19 +250,6 @@ const Pacman = (props, ref) => {
     playerPos.y,
   ]);
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      /*
-      block: (pos) => {
-        return map[pos.y][pos.x];
-      },*/
-    }),
-    []
-  );
-
-  //
-
   let xPercent = (playerPos.x * 100) / 28;
   let yPercent = (playerPos.y * 100) / 31;
   let addedStyle = {};
@@ -266,7 +267,7 @@ const Pacman = (props, ref) => {
 
   return (
     <React.Fragment>
-      <FooterScore life={3} score={playerPos.score} />
+      <FooterScore life={playerPos.life} score={playerPos.score} />
       <div
         className="containerPacman"
         style={Object.assign(
@@ -287,11 +288,13 @@ const Pacman = (props, ref) => {
         </div>
       </div>
       <GhostRandom
+        eaten={eaten}
         gameState={gameState}
         ref={ghostsRandomRef}
         playerPos={playerPos}
       />
       <GhostChaser
+        eaten={eaten}
         gameState={gameState}
         ref={ghostChaserRef}
         playerPos={playerPos}

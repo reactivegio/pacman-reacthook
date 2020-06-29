@@ -17,57 +17,123 @@ const Ghost = (props, ref) => {
     old_y: 14,
     direction: "up",
     isExitHouse: false,
+    bundleDirection: ["left", "right"], // at beginning to exit from ghost house
   });
 
   const checkCollision = useCallback(
     (x, y, direction) => {
       let value = null;
-
+      // I need to check actual position
+      if (!x && !y) {
+        value = props.playerPos.board[ghostPos.y][ghostPos.x];
+        return value;
+      }
       if (direction === "right") value = props.playerPos.board[y][x + 1];
       if (direction === "left") value = props.playerPos.board[y][x - 1];
       if (direction === "down") value = props.playerPos.board[y + 1][x];
       if (direction === "up") value = props.playerPos.board[y - 1][x];
       return value;
     },
-    [props]
+    [ghostPos.x, ghostPos.y, props.playerPos.board]
+  );
+
+  const checkBestDirection = useCallback(
+    (arrayDir) => {
+      let returnedDirection;
+      for (let j = 0; j < arrayDir.length; j++) {
+        if (ghostPos.direction === arrayDir[j]) {
+          continue;
+        } else {
+          let nexCollision = checkCollision(null, null, arrayDir[j]);
+          if (nexCollision === 1) {
+            continue;
+          }
+        }
+        returnedDirection = arrayDir[j];
+        break;
+      }
+      return returnedDirection;
+    },
+    [checkCollision, ghostPos.direction]
   );
 
   const runIt = useCallback(
     (x, y, signX, signY, direction) => {
-      const { pacmanMove } = props;
       let currentLeft = x;
       let currentTop = y;
       let cloneBoard = [...props.playerPos.board];
+      let arrayDirection = [];
+      if (
+        currentLeft === props.playerPos.x &&
+        currentTop === props.playerPos.y
+      ) {
+        props.eaten();
+        return;
+      } else {
+        // find best direction to catch Pacman it's a chaser ghost
+        let vertical = props.playerPos.y - ghostPos.y;
+        let horizontal = props.playerPos.x - ghostPos.x;
 
-      let arrayDirection = ["up", "down", "left", "right"];
+        if (ghostPos.isExitHouse) {
+          for (let d = 0; d < 4; d++) {
+            if (vertical > horizontal) {
+              if (Math.sign(vertical) > 0) {
+                arrayDirection.push("down");
+              } else {
+                arrayDirection.push("down");
+              }
+              if (Math.sign(horizontal) > 0) {
+                arrayDirection.push("right");
+              } else {
+                arrayDirection.push("left");
+              }
+              arrayDirection = arrayDirection.concat([
+                "up",
+                "left",
+                "right",
+                "down",
+              ]);
+            } else {
+              if (Math.sign(horizontal) > 0) {
+                arrayDirection.push("right");
+              } else {
+                arrayDirection.push("left");
+              }
+              if (Math.sign(vertical) > 0) {
+                arrayDirection.push("down");
+              } else {
+                arrayDirection.push("up");
+              }
+              arrayDirection = arrayDirection.concat([
+                "right",
+                "down",
+                "up",
+                "left",
+              ]);
+            }
+          }
+        } else {
+          arrayDirection = ["left", "right"];
+        }
+      }
+      arrayDirection = arrayDirection.filter((val, idx, self) => {
+        return idx === self.indexOf(val);
+      });
+      debugger;
       let collisionVal = checkCollision(currentLeft, currentTop, direction);
 
-      /* TODO Find out the direction (angle) the Ghost needs to move towards
-      Using SOH-CAH-TOA trignometic rations */
-      //   let opposite = pacmanMove.y - ghostPos.y;
-      //   let adjacent = pacmanMove.x - ghostPos.x;
-      //   let angle = Math.atan(opposite / adjacent) || 0;
-      //   if (ghostPos.x > pacmanMove.x) angle = angle + 180;
-
-      /*Use this angle to calculate the velocity vector of the Ghost
-      Once again using SOH-CAH-TOA trignometic rations*/
-      //   let velocity = 15; // #pixels per frame
-
-      //   let vx = velocity * Math.cos(angle);
-      //   let vy = velocity * Math.sin(angle);
-      //   console.log("ANGLE:: " + angle);
-      //   console.log("ANGLE vx:: " + vx);
-      //   console.log("ANGLE vy:: " + vy);
-
-      let newDirection =
-        arrayDirection[Math.floor(Math.random() * arrayDirection.length)];
+      let newDirection = checkBestDirection(arrayDirection);
+      // arrayDirection[Math.floor(Math.random() * arrayDirection.length)];
       /** change random direction */
       if (collisionVal === 1) {
         setGhostPos({
           ...ghostPos,
           direction: newDirection,
+          isExitHouse: ghostPos.isExitHouse
+            ? ghostPos.isExitHouse
+            : ![13, 14, 15].includes(ghostPos.x) ||
+              ![14, 13, 12, 11].includes(ghostPos.y),
         });
-
         return;
       }
       let left = currentLeft;
@@ -87,12 +153,16 @@ const Ghost = (props, ref) => {
         board: cloneBoard,
         old_x: currentLeft,
         old_y: currentTop,
-        direction: direction,
+        direction: ghostPos.isExitHouse ? newDirection : direction,
         score: newScore,
         sign: signX ? Math.sign(signX) : Math.sign(signY),
+        isExitHouse: ghostPos.isExitHouse
+          ? ghostPos.isExitHouse
+          : ![13, 14, 15].includes(ghostPos.x) ||
+            ![14, 13, 12, 11].includes(ghostPos.y),
       });
     },
-    [props, checkCollision, ghostPos]
+    [props, checkCollision, checkBestDirection, ghostPos]
   );
 
   useEffect(() => {

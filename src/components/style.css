@@ -30,7 +30,7 @@
     clip-path: polygon(100% 74%, 44% 48%, 100% 21%);
     border-radius: 100%;
     animation-name: eat;
-    animation-duration: 0.7s;
+    animation-duration: 0.5s;
     animation-iteration-count: infinite;
   }
   

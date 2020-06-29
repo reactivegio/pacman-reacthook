@@ -61,11 +61,9 @@ const Audio = (props, ref) => {
           if (promise !== undefined) {
             promise
               .then((_) => {
-                console.log("Audio actived");
                 // Autoplay started!
               })
               .catch((error) => {
-                console.log("Audio load prevented");
                 // Autoplay was prevented.
                 // Show a "Play" button so that user can start playback.
               });
@@ -88,15 +86,7 @@ const Audio = (props, ref) => {
             true
           );
         }
-
-        /*
-        progressEvents[name] = function (event) {
-          progress(event, name, cb);
-        };
-        */
         document.body.appendChild(f);
-
-        //f.pause();
       },
 
       disableSound: () => {
